@@ -1,0 +1,96 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#collagecanvas {
+	width: 800px;
+	height: 600px;
+  background: silver;
+  color: white;
+  position: relative;
+}
+
+#collagetoolbar {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+
+#collagetoolbar {
+	display: none;
+}
+
+#collagetoolbar #uploadsubmit {
+	display: none;
+}
+
+#login {
+	position: absolute;
+	right: 0px;
+	display: none;
+}
+
+.collageitem {
+	background: white;
+	padding: 5px;
+  position: absolute !important;
+	
+	/*-moz-transform: rotate(10deg);  /* FF3.5/3.6 */
+	/*-o-transform: rotate(10deg);  /* Opera 10.5 */
+	/*-webkit-transform: rotate(10deg);  /* Saf3.1+ */
+	/*transform: rotate(10deg);  /* Newer browsers (incl IE9) */
+}
+
+.collageitem .image {
+  background: c0c0c0;
+  width: 200px;
+  height: 50px;
+  margin: 0px;
+  padding: 0px;
+  background: url('/collage/img/ajax-loader.gif') 50% 50% no-repeat;
+}
+
+.collageitem .text {
+	width: auto;
+	height: 1.2em;
+	color: black;
+	padding-top: 4px;
+}
+
+.collageitem .text .placeholder {
+	color: gray;
+}
+
+.collageitem .delete {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background-color: white;
+	display: none;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}	
+
+.clearfix {
+	display: inline-block;
+}
+
+html[xmlns] .clearfix {
+	display: block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
