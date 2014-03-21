@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kollaasi <%= id %></title>
+		<link rel='stylesheet' href='/scenario/css/scenario.css' />
+		<link rel='stylesheet' href='/scenario/css/lightbox.css' />
+		<link rel='stylesheet' href='/scenario/css/jquery-ui-1.10.0.custom.css' />
+		<script src='/scenario/js/jquery-1.9.0.js'></script>
+		<script src='/scenario/js/jquery-ui-1.10.0.custom.js'></script>
+		<script src='/scenario/js/jquery.cookie.js'></script>
+		<script src='/scenario/js/jquery.ajaxfileupload.js'></script>
+		<script src='/scenario/js/jquery.jeditable.js'></script>
+		<!--<script src='/scenario/js/lightbox.js'></script>-->
+		<script src='/scenario/js/scenario.js'></script>
+	</head>
+	<body>
+		<div id='scenariocanvas' title='<%= id %>'>
+			<div id='login'>
+				<form name='loginform' id='loginform' method='post'>
+					<input type='password' name='password' id='password' placeholder='Syötä salasana...'></input>
+					<input type='submit' name='loginsubmit' id='loginsubmit' value='Kirjaudu'></input>
+				</form>
+			</div>
+			<div id='scenariotoolbar'>
+				<form name='addpicture' id='addpicture' method='post' enctype='multipart/form-data'>
+					Lisää kuva 
+					<input type='file' name='scenariopicture' id='scenariopicture' accept='image/*'></input>
+					<input type='submit' name='uploadsubmit' id='uploadsubmit' value='Lataa'></input>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

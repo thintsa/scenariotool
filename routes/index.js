@@ -19,9 +19,9 @@ exports.logout = function(req, res){
 	res.send({'status' : 'logged out'});
 };
 
-// collage page
-exports.collage = function(req, res){
-	res.render('collage', { id: req.params.id });
+// scenario page
+exports.scenario = function(req, res){
+	res.render('scenario', { id: req.params.id });
 };
 
 // image upload
@@ -29,8 +29,8 @@ exports.imgupload = function(req, res){
 	var fs = require('fs'),
 		im = require('imagemagick');
 
-	var realpath = '/home/thtimo/collage/collage/public/collage/img/upload/';
-	var webpath = '/collage/img/upload/';
+	var realpath = '/home/thtimo/scenario/scenario/public/scenario/img/upload/';
+	var webpath = '/scenario/img/upload/';
 
 	var filename = req.files.collagepicture.path;
 	filename = filename.substring(filename.lastIndexOf('/') + 1);
@@ -69,8 +69,8 @@ exports.imgupload = function(req, res){
 exports.getimage = function(req, res){
 	var exec = require('execSync');
 
-	var outputfile = '/home/thtimo/collage/collage/public/collage/img/generated/' + req.params.id + '.jpg';
-	var url = 'http://acdccloud.vtt.fi/collage/' + req.params.id;
+	var outputfile = '/home/thtimo/scenario/scenario/public/scenario/img/generated/' + req.params.id + '.jpg';
+	var url = 'http://acdccloud.vtt.fi/scenario/' + req.params.id;
 
 	var code = exec.code('/usr/local/bin/wkhtmltoimage-amd64 -f jpg ' + url + ' ' + outputfile);
 

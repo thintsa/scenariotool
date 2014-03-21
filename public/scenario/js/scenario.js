@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 	var collageid = $('#collagecanvas').attr('title');
 
-	var collage = Object();
+	var scenario = Object();
 	var collageitems = Array();
 
 	var loggedin = false;
@@ -12,7 +12,7 @@ $(document).ready(function(){
 	// Internet Explorer really wants to fuck up everything
 	var date = new Date();
 
-	// check if collage exists already
+	// check if scenario exists already
 	$.get(api_base + 'collages/' + collageid + '?_=' + date.getTime(), function(data) {
 		if (data.length > 0) {
 			$('#login').show();
@@ -58,7 +58,7 @@ $(document).ready(function(){
 		});
 
 		$('#collagepicture').ajaxfileupload({
-			action : '/collage/imgupload',
+			action : '/scenario/imgupload',
 			onStart : function() {},
 			onComplete : function(response) {
 				var newitem = $('#newcollageitem');
@@ -183,7 +183,7 @@ $(document).ready(function(){
 
 	function createitem(item, editable) {
 		editable = typeof editable !== 'undefined' ? editable : true;
-		var newitem = $('<div class="collageitem" id="newcollageitem"><img src="/collage/img/ajax-loader.gif" /><div class="text"></div><div class="delete ui-icon ui-icon-close" title="Poista"></div></div>');
+		var newitem = $('<div class="collageitem" id="newcollageitem"><img src="/scenario/img/ajax-loader.gif" /><div class="text"></div><div class="delete ui-icon ui-icon-close" title="Poista"></div></div>');
 		// replace data only if _id exists (== the item comes from a database)
 		if (item._id !== undefined) {
 			newitem.attr('id', item._id);
@@ -238,10 +238,10 @@ $(document).ready(function(){
 
 	function checklogin() {
 		var data = {
-			path: '/collage/' + collageid,
+			path: '/scenario/' + collageid,
 			password: $('#password').val()
 		};
-		$.post('/collage/' + collageid + '/logincookie', data, function(response) {
+		$.post('/scenario/' + collageid + '/logincookie', data, function(response) {
 			var data = {
 				password: response.digest
 			};
@@ -257,8 +257,8 @@ $(document).ready(function(){
 				logout.click(function(event) {
 					$.cookie('vttcollagepw', null);
 					$.ajax({
-						url: '/collage/' + collageid + '/logincookie',
-						data: {path: '/collage/' + collageid},
+						url: '/scenario/' + collageid + '/logincookie',
+						data: {path: '/scenario/' + collageid},
 						type: 'DELETE',
 						success: function(data) {
 							location.reload();

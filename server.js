@@ -1,10 +1,9 @@
 var express = require('express'),
 	routes = require('./routes'),
 	http = require('http'),
-	qt = require('quickthumb'),
 	path = require('path');
 
-var basepath = '/collage';
+var basepath = '/scenario';
 
 var app = express();
 
@@ -14,7 +13,8 @@ app.configure(function(){
   app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
-  app.use(express.bodyParser());
+  app.use(express.json());
+  app.use(express.urlencoded());
   app.use(express.methodOverride());
   app.use(express.cookieParser('Ap2cAfd5t3x7KoM3LsrS'));
   app.use(express.session());
@@ -28,7 +28,7 @@ app.configure('development', function(){
 
 app.get(basepath + '/', routes.index);
 
-app.get(basepath + '/:id', routes.collage);
+app.get(basepath + '/:id', routes.scenario);
 
 app.post(basepath + '/:id/logincookie', routes.login);
 
