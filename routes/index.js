@@ -24,6 +24,16 @@ exports.scenario = function(req, res){
 	res.render('scenario', { id: req.params.id });
 };
 
+// admin page
+exports.admin = function(req, res){
+	res.render('admin', { id: req.params.id });
+};
+
+// überadmin page
+exports.uberadmin = function(req, res){
+	res.render('uberadmin');
+};
+
 // image upload
 exports.imgupload = function(req, res){
 	var fs = require('fs'),

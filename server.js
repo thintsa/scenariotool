@@ -28,7 +28,11 @@ app.configure('development', function(){
 
 app.get(basepath + '/', routes.index);
 
+app.get(basepath + '/uberadmin', routes.uberadmin);
+
 app.get(basepath + '/:id', routes.scenario);
+
+app.get(basepath + '/:id/admin', routes.admin);
 
 app.post(basepath + '/:id/logincookie', routes.login);
 
