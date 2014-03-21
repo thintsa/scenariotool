@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var scenarios = [];
-	$.getJSON('http://acdccloud.vtt.fi/scenarioapi/api/scenarios', function(data) {
+	$.getJSON('http://localhost:3000/scenarioapi/api/scenarios', function(data) {
 		$.each(data, function (key, val) {
 			scenarios.push(val.id);
 		});
@@ -9,7 +9,7 @@ $(document).ready(function(){
 	$('#createscenario').submit(function (event) {
 		event.preventDefault();
 
-		var api_base = 'http://acdccloud.vtt.fi/scenarioapi/api/';
+		var api_base = 'http://localhost:3000/scenarioapi/api/';
 
 		var scenarioname = $('#scenarioname').val();
 
@@ -26,7 +26,7 @@ $(document).ready(function(){
 					password : response.digest
 				};
 				$.post(api_base + 'scenarios/', scenario, function() {
-					window.location.href = 'http://acdccloud.vtt.fi/scenario/' + scenarioname;
+					window.location.href = 'http://localhost:3000/scenario/' + scenarioname;
 				});
 			});
 		} else {
