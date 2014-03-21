@@ -7,7 +7,7 @@ a {
   color: #00B7FF;
 }
 
-#collagecanvas {
+#scenariocanvas {
 	width: 800px;
 	height: 600px;
   background: silver;
@@ -15,17 +15,17 @@ a {
   position: relative;
 }
 
-#collagetoolbar {
+#scenariotoolbar {
 	position: absolute;
 	bottom: 0px;
 	right: 0px;
 }
 
-#collagetoolbar {
+#scenariotoolbar {
 	display: none;
 }
 
-#collagetoolbar #uploadsubmit {
+#scenariotoolbar #uploadsubmit {
 	display: none;
 }
 
@@ -35,7 +35,7 @@ a {
 	display: none;
 }
 
-.collageitem {
+.scenarioitem {
 	background: white;
 	padding: 5px;
   position: absolute !important;
@@ -46,7 +46,7 @@ a {
 	/*transform: rotate(10deg);  /* Newer browsers (incl IE9) */
 }
 
-.collageitem .image {
+.scenarioitem .image {
   background: c0c0c0;
   width: 200px;
   height: 50px;
@@ -55,18 +55,18 @@ a {
   background: url('/scenario/img/ajax-loader.gif') 50% 50% no-repeat;
 }
 
-.collageitem .text {
+.scenarioitem .text {
 	width: auto;
 	height: 1.2em;
 	color: black;
 	padding-top: 4px;
 }
 
-.collageitem .text .placeholder {
+.scenarioitem .text .placeholder {
 	color: gray;
 }
 
-.collageitem .delete {
+.scenarioitem .delete {
 	position: absolute;
 	top: 0px;
 	right: 0px;

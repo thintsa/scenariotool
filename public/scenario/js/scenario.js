@@ -1,11 +1,11 @@
 $(document).ready(function(){
-	var canvas = $('#collagecanvas');
-	var api_base = 'http://acdccloud.vtt.fi/collageapi/api/';
+	var canvas = $('#scenariocanvas');
+	var api_base = 'http://localhost:3000/scenarioapi/api/';
 
-	var collageid = $('#collagecanvas').attr('title');
+	var scenarioid = $('#scenariocanvas').attr('title');
 
 	var scenario = Object();
-	var collageitems = Array();
+	var scenarioitems = Array();
 
 	var loggedin = false;
 
@@ -13,18 +13,18 @@ $(document).ready(function(){
 	var date = new Date();
 
 	// check if scenario exists already
-	$.get(api_base + 'collages/' + collageid + '?_=' + date.getTime(), function(data) {
+	$.get(api_base + 'scenarios/' + scenarioid + '?_=' + date.getTime(), function(data) {
 		if (data.length > 0) {
 			$('#login').show();
-			$.get(api_base + 'collages/' + collageid + '/items?_=' + date.getTime(), function(data) {
-				collageitems = data;
+			$.get(api_base + 'scenarios/' + scenarioid + '/items?_=' + date.getTime(), function(data) {
+				scenarioitems = data;
 				// render items
-				$.each(collageitems, function(index, item) {
+				$.each(scenarioitems, function(index, item) {
 					createitem(item);
 				});
 			});
 		} else {
-			$('#collagecanvas').replaceWith('Kollaasia ei löydy');
+			$('#scenariocanvas').replaceWith('Kollaasia ei löydy');
 		}
 	});
 
@@ -34,15 +34,15 @@ $(document).ready(function(){
 	});
 
 	// check if logged in
-	if ($.cookie('vttcollagepw') != undefined) {
+	if ($.cookie('vttscenariopw') != undefined) {
 		var data = {
-			password : $.cookie('vttcollagepw')
+			password : $.cookie('vttscenariopw')
 		};
 		checkapilogin(data);
 	}
 
 	function enable_editing() {
-		$('#collagetoolbar').show();
+		$('#scenariotoolbar').show();
 
 		canvas.droppable({
 			drop: function( event, ui ) {
@@ -53,15 +53,15 @@ $(document).ready(function(){
 					posy: ui.position.top,
 					posz: ui.draggable.css('z-index')
 				};
-				updateitem(collageid, ui.draggable.attr('id'), item);
+				updateitem(scenarioid, ui.draggable.attr('id'), item);
 			}
 		});
 
-		$('#collagepicture').ajaxfileupload({
+		$('#scenariopicture').ajaxfileupload({
 			action : '/scenario/imgupload',
 			onStart : function() {},
 			onComplete : function(response) {
-				var newitem = $('#newcollageitem');
+				var newitem = $('#newscenarioitem');
 
 				// switch image to correct one
 				var image = $('<a href="' + response.filename + '" rel="lightbox"><img src="' + response.thumbfilename + '" style="width: 200px;" /></a>');
@@ -73,23 +73,23 @@ $(document).ready(function(){
 					var position = newitem.position();
 					var image = newitem.find('img');
 					var item = {
-						collageid: collageid,
+						scenarioid: scenarioid,
 						thumbnailurl: response.thumbfilename,
 						imageurl: response.filename,
 						posx: position.left,
 						posy: position.top,
-						posz: getmaxz(collageitems) + 1,
+						posz: getmaxz(scenarioitems) + 1,
 						width: newitem.width(),
 						height: newitem.height(),
 						imagewidth: image.width(),
 						imageheight: image.height(),
-						password: $.cookie('vttcollagepw')
+						password: $.cookie('vttscenariopw')
 					};
 					makedraggable(newitem);
 					makeresizable(newitem);
 					makeeditable(newitem);
 					makedeletable(newitem);
-					$.post(api_base + 'collages/' + collageid + '/items', item, function(saveresponse) {
+					$.post(api_base + 'scenarios/' + scenarioid + '/items', item, function(saveresponse) {
 						newitem.attr('id', saveresponse._id);
 					});
 				}, 1000); // wait for the image for size calculations to work
@@ -97,28 +97,28 @@ $(document).ready(function(){
 			submit_button : $('#uploadsubmit')
 		});
 
-		$('#collagepicture').change(function(event) { $('#uploadsubmit').click(); });
+		$('#scenariopicture').change(function(event) { $('#uploadsubmit').click(); });
 
 		$('#addpicture').submit(function(event) {
 			// note: this is a visual placeholder, submit is handled by ajaxfileupload
 			event.preventDefault();
 
-			if ($('#collagepicture').val() !== "") {
+			if ($('#scenariopicture').val() !== "") {
 				// create new item visuals
 				var newitem = {
 					posx: 100 + Math.floor((Math.random()*200)),
 					posy: 100 + Math.floor((Math.random()*200)),
-					posz: getmaxz(collageitems),
+					posz: getmaxz(scenarioitems),
 					width: 200
 				};
 				createitem(newitem, false);
 			}
 		});
 
-		makedraggable($('.collageitem'));
-		makeresizable($('.collageitem'));
-		makeeditable($('.collageitem'));
-		makedeletable($('.collageitem'));
+		makedraggable($('.scenarioitem'));
+		makeresizable($('.scenarioitem'));
+		makeeditable($('.scenarioitem'));
+		makedeletable($('.scenarioitem'));
 	}
 
 	function makedraggable(items) {
@@ -126,8 +126,8 @@ $(document).ready(function(){
 			$(this).draggable({
 				containment: 'parent',
 				start: function(event, ui ) {
-					var maxz = getmaxz(collageitems) + 1;
-					collageitems.maxz = maxz;
+					var maxz = getmaxz(scenarioitems) + 1;
+					scenarioitems.maxz = maxz;
 					$(this).css('z-index', maxz);
 				}
 			});
@@ -152,7 +152,7 @@ $(document).ready(function(){
 						posx: ui.position.left,
 						posy: ui.position.top
 					};
-					updateitem(collageid, $(this).attr('id'), item);
+					updateitem(scenarioid, $(this).attr('id'), item);
 				}
 			});
 		});
@@ -162,7 +162,7 @@ $(document).ready(function(){
 		items.each(function () {
 			$(this).children('.text:first').editable(
 				function(value, settings) {
-					updateitem(collageid, $(this).parent().attr('id'), {text : value});
+					updateitem(scenarioid, $(this).parent().attr('id'), {text : value});
 					return(value);
 				}, {
 				placeholder: '<span class="placeholder">Kirjoita kuvateksti...</span>'
@@ -176,14 +176,14 @@ $(document).ready(function(){
 			deletebutton.show();
 			deletebutton.click(function (event) {
 				$(this).parent().remove();
-				deleteitem(collageid, $(this).parent().attr('id'));
+				deleteitem(scenarioid, $(this).parent().attr('id'));
 			});
 		});
 	}
 
 	function createitem(item, editable) {
 		editable = typeof editable !== 'undefined' ? editable : true;
-		var newitem = $('<div class="collageitem" id="newcollageitem"><img src="/scenario/img/ajax-loader.gif" /><div class="text"></div><div class="delete ui-icon ui-icon-close" title="Poista"></div></div>');
+		var newitem = $('<div class="scenarioitem" id="newscenarioitem"><img src="/scenario/img/ajax-loader.gif" /><div class="text"></div><div class="delete ui-icon ui-icon-close" title="Poista"></div></div>');
 		// replace data only if _id exists (== the item comes from a database)
 		if (item._id !== undefined) {
 			newitem.attr('id', item._id);
@@ -216,20 +216,20 @@ $(document).ready(function(){
 		canvas.append(newitem);
 	}
 
-	function updateitem(collageid, id, item) {
-		$.extend(item, {password: $.cookie('vttcollagepw')});
+	function updateitem(scenarioid, id, item) {
+		$.extend(item, {password: $.cookie('vttscenariopw')});
 		$.ajax({
-			url: api_base + 'collages/' + collageid + '/items/' + id,
+			url: api_base + 'scenarios/' + scenarioid + '/items/' + id,
 			type: 'PUT',
 			data: item,
 			success: function(result) { console.log(result); }
 		});
 	}
 
-	function deleteitem(collageid, id) {
-		var data = {password: $.cookie('vttcollagepw')};
+	function deleteitem(scenarioid, id) {
+		var data = {password: $.cookie('vttscenariopw')};
 		$.ajax({
-			url: api_base + 'collages/' + collageid + '/items/' + id,
+			url: api_base + 'scenarios/' + scenarioid + '/items/' + id,
 			type: 'DELETE',
 			data: data,
 			success: function(result) { console.log(result); }
@@ -238,10 +238,10 @@ $(document).ready(function(){
 
 	function checklogin() {
 		var data = {
-			path: '/scenario/' + collageid,
+			path: '/scenario/' + scenarioid,
 			password: $('#password').val()
 		};
-		$.post('/scenario/' + collageid + '/logincookie', data, function(response) {
+		$.post('/scenario/' + scenarioid + '/logincookie', data, function(response) {
 			var data = {
 				password: response.digest
 			};
@@ -250,15 +250,15 @@ $(document).ready(function(){
 	}
 
 	function checkapilogin(data) {
-		$.post(api_base + 'collages/' + collageid + '/login', data, function(data) {
+		$.post(api_base + 'scenarios/' + scenarioid + '/login', data, function(data) {
 			if (data.result == 'ok') {
 				// display logout button and enable editing
 				var logout = $('<button type="button">Kirjaudu ulos</button>');
 				logout.click(function(event) {
-					$.cookie('vttcollagepw', null);
+					$.cookie('vttscenariopw', null);
 					$.ajax({
-						url: '/scenario/' + collageid + '/logincookie',
-						data: {path: '/scenario/' + collageid},
+						url: '/scenario/' + scenarioid + '/logincookie',
+						data: {path: '/scenario/' + scenarioid},
 						type: 'DELETE',
 						success: function(data) {
 							location.reload();
