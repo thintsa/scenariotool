@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var scenarios = [];
-	$.getJSON('http://localhost:3000/scenarioapi/api/scenarios', function(data) {
+	$.getJSON('http://localhost:3000/api/projects', function(data) {
 		$.each(data, function (key, val) {
 			scenarios.push(val.id);
 		});
@@ -9,7 +9,7 @@ $(document).ready(function(){
 	$('#createscenario').submit(function (event) {
 		event.preventDefault();
 
-		var api_base = 'http://localhost:3000/scenarioapi/api/';
+		var api_base = 'http://localhost:3000/api/';
 
 		var scenarioname = $('#scenarioname').val();
 

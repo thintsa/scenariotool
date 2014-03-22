@@ -1,7 +1,7 @@
 var express = require('express'),
-	routes = require('./routes'),
-	http = require('http'),
-	path = require('path');
+  routes = require('./routes'),
+  http = require('http'),
+  path = require('path');
 
 var basepath = '/scenario';
 
@@ -16,7 +16,7 @@ app.configure(function(){
   app.use(express.json());
   app.use(express.urlencoded());
   app.use(express.methodOverride());
-  app.use(express.cookieParser('Ap2cAfd5t3x7KoM3LsrS'));
+  app.use(express.cookieParser('ft3x7Ap2sSd5rcAKoM3L'));
   app.use(express.session());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
@@ -30,13 +30,13 @@ app.get(basepath + '/', routes.index);
 
 app.get(basepath + '/uberadmin', routes.uberadmin);
 
-app.get(basepath + '/:id', routes.scenario);
+app.get(basepath + '/:projectid', routes.scenario);
 
-app.get(basepath + '/:id/admin', routes.admin);
+app.get(basepath + '/:projectid/admin', routes.admin);
 
-app.post(basepath + '/:id/logincookie', routes.login);
+app.post(basepath + '/:projectid/logincookie', routes.login);
 
-app.delete(basepath + '/:id/logincookie', routes.logout);
+app.delete(basepath + '/:projectid/logincookie', routes.logout);
 
 app.post(basepath + '/imgupload', routes.imgupload);
 
