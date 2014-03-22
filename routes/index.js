@@ -9,7 +9,7 @@ exports.login = function(req, res){
 		shasum = crypto.createHash('sha1');
 	shasum.update(req.body.password);
 	var digest = shasum.digest('hex');
-	res.cookie('vttcollagepw', digest, {domain:'acdccloud.vtt.fi', path: '/'});
+	res.cookie('scenariopw', digest, {domain:'localhost:3001', path: '/'});
 	res.send({'digest' : digest});
 };
 

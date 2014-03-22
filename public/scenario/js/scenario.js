@@ -34,9 +34,9 @@ $(document).ready(function(){
 	});
 
 	// check if logged in
-	if ($.cookie('vttscenariopw') != undefined) {
+	if ($.cookie('scenariopw') != undefined) {
 		var data = {
-			password : $.cookie('vttscenariopw')
+			password : $.cookie('scenariopw')
 		};
 		checkapilogin(data);
 	}
@@ -83,7 +83,7 @@ $(document).ready(function(){
 						height: newitem.height(),
 						imagewidth: image.width(),
 						imageheight: image.height(),
-						password: $.cookie('vttscenariopw')
+						password: $.cookie('scenariopw')
 					};
 					makedraggable(newitem);
 					makeresizable(newitem);
@@ -217,7 +217,7 @@ $(document).ready(function(){
 	}
 
 	function updateitem(scenarioid, id, item) {
-		$.extend(item, {password: $.cookie('vttscenariopw')});
+		$.extend(item, {password: $.cookie('scenariopw')});
 		$.ajax({
 			url: api_base + 'scenarios/' + scenarioid + '/items/' + id,
 			type: 'PUT',
@@ -227,7 +227,7 @@ $(document).ready(function(){
 	}
 
 	function deleteitem(scenarioid, id) {
-		var data = {password: $.cookie('vttscenariopw')};
+		var data = {password: $.cookie('scenariopw')};
 		$.ajax({
 			url: api_base + 'scenarios/' + scenarioid + '/items/' + id,
 			type: 'DELETE',
@@ -255,7 +255,7 @@ $(document).ready(function(){
 				// display logout button and enable editing
 				var logout = $('<button type="button">Kirjaudu ulos</button>');
 				logout.click(function(event) {
-					$.cookie('vttscenariopw', null);
+					$.cookie('scenariopw', null);
 					$.ajax({
 						url: '/scenario/' + scenarioid + '/logincookie',
 						data: {path: '/scenario/' + scenarioid},
