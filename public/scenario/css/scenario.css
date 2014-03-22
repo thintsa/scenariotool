@@ -29,12 +29,6 @@ a {
 	display: none;
 }
 
-#login {
-	position: absolute;
-	right: 0px;
-	display: none;
-}
-
 .scenarioitem {
 	background: white;
 	padding: 5px;

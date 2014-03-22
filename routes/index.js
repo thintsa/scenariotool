@@ -3,22 +3,6 @@ exports.index = function(req, res){
   res.render('index');
 };
 
-//login page
-exports.login = function(req, res){
-	var crypto = require('crypto'),
-		shasum = crypto.createHash('sha1');
-	shasum.update(req.body.password);
-	var digest = shasum.digest('hex');
-	res.cookie('scenariopw', digest, {domain:'localhost:3001', path: '/'});
-	res.send({'digest' : digest});
-};
-
-//logout page
-exports.logout = function(req, res){
-	res.clearCookie('vttcollagepw', {domain:'acdccloud.vtt.fi', path: '/'});
-	res.send({'status' : 'logged out'});
-};
-
 // scenario page
 exports.scenario = function(req, res){
 	res.render('scenario', { projectid: req.params.projectid });

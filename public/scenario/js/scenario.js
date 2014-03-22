@@ -7,15 +7,12 @@ $(document).ready(function(){
 	var scenario = Object();
 	var scenarioitems = Array();
 
-	var loggedin = false;
-
 	// Internet Explorer really wants to fuck up everything
 	var date = new Date();
 
 	// check if scenario exists already
 	$.get(api_base + 'scenarios/' + scenarioid + '?_=' + date.getTime(), function(data) {
 		if (data.length > 0) {
-			$('#login').show();
 			$.get(api_base + 'scenarios/' + scenarioid + '/items?_=' + date.getTime(), function(data) {
 				scenarioitems = data;
 				// render items
@@ -28,18 +25,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#loginsubmit').click(function(event) {
-		event.preventDefault();
-		checklogin();
-	});
-
-	// check if logged in
-	if ($.cookie('scenariopw') != undefined) {
-		var data = {
-			password : $.cookie('scenariopw')
-		};
-		checkapilogin(data);
-	}
+	enable_editing();
 
 	function enable_editing() {
 		$('#scenariotoolbar').show();
@@ -233,45 +219,6 @@ $(document).ready(function(){
 			type: 'DELETE',
 			data: data,
 			success: function(result) { console.log(result); }
-		});
-	}
-
-	function checklogin() {
-		var data = {
-			path: '/scenario/' + scenarioid,
-			password: $('#password').val()
-		};
-		$.post('/scenario/' + scenarioid + '/logincookie', data, function(response) {
-			var data = {
-				password: response.digest
-			};
-			checkapilogin(data);
-		});
-	}
-
-	function checkapilogin(data) {
-		$.post(api_base + 'scenarios/' + scenarioid + '/login', data, function(data) {
-			if (data.result == 'ok') {
-				// display logout button and enable editing
-				var logout = $('<button type="button">Kirjaudu ulos</button>');
-				logout.click(function(event) {
-					$.cookie('scenariopw', null);
-					$.ajax({
-						url: '/scenario/' + scenarioid + '/logincookie',
-						data: {path: '/scenario/' + scenarioid},
-						type: 'DELETE',
-						success: function(data) {
-							location.reload();
-						}
-					});
-				});
-				$('#login').html(logout);
-				enable_editing();
-				loggedin = true;
-			} else {
-				$('#password').effect("highlight", {color: '#faa'}, 2000);
-				loggedin = false;
-			}
 		});
 	}
 

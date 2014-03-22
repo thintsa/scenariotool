@@ -17,20 +17,13 @@ $(document).ready(function(){
 		var projectname = $('#projectname').val();
 
 		if ($.inArray(projectname, projectnames) < 0) {
-			var data = {
-				path: '/projects/' + projectname,
-				password: $('#projectpassword').val()
+			var project = {
+				projectid : projectname,
 			};
-			$.post(projectname + '/logincookie', data, function(response) {
-				var project = {
-					projectid : projectname,
-					password : response.digest
-				};
-				$.post(api_base + 'projects', project)
-				.always(function(response) { // fix: for some reason .done() doesn't work even if the project is created, cross domain post problems perhaps
-					window.location.href = 'http://localhost:3001/scenario/' + projectname + '/admin';
-				})
-			});
+			$.post(api_base + 'projects', project)
+			.always(function(response) { // fix: for some reason .done() doesn't work even if the project is created, cross domain post problems perhaps
+				window.location.href = 'http://localhost:3001/scenario/' + projectname + '/admin';
+			})
 		} else {
 			alert('Kollaasi nimellä ' + projectname + ' on jo olemassa.');
 		}

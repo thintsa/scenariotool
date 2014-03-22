@@ -34,10 +34,6 @@ app.get(basepath + '/:projectid', routes.scenario);
 
 app.get(basepath + '/:projectid/admin', routes.admin);
 
-app.post(basepath + '/:projectid/logincookie', routes.login);
-
-app.delete(basepath + '/:projectid/logincookie', routes.logout);
-
 app.post(basepath + '/imgupload', routes.imgupload);
 
 http.createServer(app).listen(app.get('port'), function(){
