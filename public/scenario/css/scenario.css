@@ -10,7 +10,7 @@ a {
 #scenariocanvas {
 	width: 500px;
 	height: 500px;
-  background: silver;
+  background: url('/scenario/img/upload/prefmapbg.png');
   color: white;
   position: relative;
 }
