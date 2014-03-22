@@ -1,6 +1,6 @@
 // home page
 exports.index = function(req, res){
-  res.render('index', { title: 'Luo uusi kollaasi' });
+  res.render('index');
 };
 
 //login page
