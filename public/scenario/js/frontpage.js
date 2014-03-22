@@ -28,7 +28,7 @@ $(document).ready(function(){
 				};
 				$.post(api_base + 'projects', project)
 				.always(function(response) { // fix: for some reason .done() doesn't work even if the project is created, cross domain post problems perhaps
-					window.location.href = 'http://localhost:3000/projects/' + projectname;
+					window.location.href = 'http://localhost:3001/scenario/' + projectname + '/admin';
 				})
 			});
 		} else {

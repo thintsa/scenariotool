@@ -21,12 +21,12 @@ exports.logout = function(req, res){
 
 // scenario page
 exports.scenario = function(req, res){
-	res.render('scenario', { id: req.params.id });
+	res.render('scenario', { projectid: req.params.projectid });
 };
 
 // admin page
 exports.admin = function(req, res){
-	res.render('admin', { id: req.params.id });
+	res.render('admin', { projectid: req.params.projectid });
 };
 
 // überadmin page
