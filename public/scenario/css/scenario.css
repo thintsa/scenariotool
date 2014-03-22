@@ -8,8 +8,8 @@ a {
 }
 
 #scenariocanvas {
-	width: 800px;
-	height: 600px;
+	width: 500px;
+	height: 500px;
   background: silver;
   color: white;
   position: relative;
@@ -41,7 +41,7 @@ a {
 }
 
 .scenarioitem .image {
-  background: c0c0c0;
+  background: #c0c0c0;
   width: 200px;
   height: 50px;
   margin: 0px;
