@@ -1,29 +1,27 @@
 $(document).ready(function(){
 	var canvas = $('#scenariocanvas');
-	var api_base = 'http://localhost:3000/scenarioapi/api/';
+	var api_base = 'http://localhost/api/';
 
 	var scenarioid = $('#scenariocanvas').attr('title');
 
 	var scenario = Object();
 	var scenarioitems = Array();
 
-	// Internet Explorer really wants to fuck up everything
-	var date = new Date();
-
+	var date = new Date(); // using date to ensure avoiding cache problems
 	// check if scenario exists already
-	$.get(api_base + 'scenarios/' + scenarioid + '?_=' + date.getTime(), function(data) {
-		if (data.length > 0) {
-			$.get(api_base + 'scenarios/' + scenarioid + '/items?_=' + date.getTime(), function(data) {
+	/*$.get(api_base + 'projects/' + scenarioid + '/scenarios/test?_=' + date.getTime(), function(data) {
+		if (data.length > 0) {*/
+			$.get(api_base + 'projects/' + scenarioid + '/scenarios/test/items?_=' + date.getTime(), function(data) {
 				scenarioitems = data;
 				// render items
 				$.each(scenarioitems, function(index, item) {
 					createitem(item);
 				});
 			});
-		} else {
-			$('#scenariocanvas').replaceWith('Kollaasia ei löydy');
+		/*} else {
+			$('#scenariocanvas').replaceWith('Skenaariota ei löydy');
 		}
-	});
+	});*/
 
 	enable_editing();
 
@@ -176,7 +174,6 @@ $(document).ready(function(){
 
 			var imagenode = newitem.children('img:first');
 			var newimagenode = $('<img src="' + item.thumbnailurl + '" />');
-//			imagenode.replaceWith($('<a href="' + item.imageurl + '" rel="lightbox"><img src="' + item.thumbnailurl + '" /></a>'));
 			imagenode.replaceWith(newimagenode);
 			newimagenode.css({width: item.imagewidth, height: item.imageheight});
 
@@ -191,13 +188,8 @@ $(document).ready(function(){
 			height: item.height
 		});
 
-		if (loggedin) {
-			if (editable) {
-				makedraggable(newitem);
-				makeresizable(newitem);
-				makeeditable(newitem);
-				makedeletable(newitem);
-			}
+		if (editable) {
+			makedraggable(newitem);
 		}
 		canvas.append(newitem);
 	}
