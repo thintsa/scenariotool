@@ -7,20 +7,28 @@ $(document).ready(function(){
 	var scenarioitems = Array();
 
 	var date = new Date(); // using date to ensure avoiding cache problems
-	// check if scenario exists already
-	/*$.get(api_base + 'projects/' + scenarioid + '/scenarios/test?_=' + date.getTime(), function(data) {
-		if (data.length > 0) {*/
-			$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items?_=' + date.getTime(), function(data) {
-				scenarioitems = data;
-				// render items
-				$.each(scenarioitems, function(index, item) {
-					createitem(item);
-				});
+
+	$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items?_=' + date.getTime(), function(data) {
+		scenarioitems = data;
+		var itemids = [];
+		$.each(data, function(index, item) {
+			itemids.push(item.frompaletteitem);
+		});
+
+		// get palette items too
+		$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/paletteitems?_=' + date.getTime(), function(data) {
+			$.each(data, function(index, item) {
+				if ($.inArray(item._id, itemids) === -1) {
+					scenarioitems.push(item);
+				}
 			});
-		/*} else {
-			$('#scenariocanvas').replaceWith('Skenaariota ei löydy');
-		}
-	});*/
+
+			// render items
+			$.each(scenarioitems, function(index, item) {
+				createitem(item);
+			});
+		});
+	});
 
 	enable_editing();
 
@@ -29,14 +37,37 @@ $(document).ready(function(){
 
 		canvas.droppable({
 			drop: function( event, ui ) {
-				console.log('dropped: y:' + ui.position.top + ' x:' + ui.position.left );
+				// find scenarioitem with correct id
+				var item = Object();
+				$.each(scenarioitems, function(index, val) {
+					if (val.ispaletteitem) {
+						if (val._id == ui.draggable.attr('id')) {
+							$.extend(item, val);
+							item.frompaletteitem = val._id;
+							item.ispaletteitem = false;
+							delete item._id; // delete the original id to get new one
+							return;
+						}
+					}
+				});
+
 				// update item position
-				var item = {
+				$.extend(item, {
 					posx: ui.position.left,
 					posy: ui.position.top,
 					posz: ui.draggable.css('z-index')
-				};
-				updateitem(scenarioid, ui.draggable.attr('id'), item);
+				});
+
+				console.log('dropped: y:' + ui.position.top + ' x:' + ui.position.left );
+				if (item.frompaletteitem !== undefined) {
+					$.post(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items', item, function(saveresponse) {
+						item._id = saveresponse._id;
+						createitem(item);
+						ui.draggable.remove();
+					});
+				} else {
+					updateitem(scenarioid, ui.draggable.attr('id'), item);
+				}
 			}
 		});
 
