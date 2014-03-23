@@ -1,6 +1,6 @@
 db.scenarioitems.save([{
     "projectid": "preferencemap",
-    "scenarioid": "test",
+    "scenarioid": "",
     "ispaletteitem": true,
     "text": "DS1",
     "imageurl": "/static/img/upload/DS1.jpg",
@@ -18,7 +18,7 @@ db.scenarioitems.save([{
   },
 {
     "projectid": "preferencemap",
-    "scenarioid": "test",
+    "scenarioid": "",
     "ispaletteitem": true,
     "text": "DS6",
     "imageurl": "/static/img/upload/DS6.jpg",
@@ -36,7 +36,7 @@ db.scenarioitems.save([{
   },
   {
     "projectid": "preferencemap",
-    "scenarioid": "test",
+    "scenarioid": "",
     "ispaletteitem": true,
     "text": "DS3",
     "imageurl": "/static/img/upload/DS3.jpg",
@@ -54,7 +54,7 @@ db.scenarioitems.save([{
   },
  {
     "projectid": "preferencemap",
-    "scenarioid": "test",
+    "scenarioid": "",
     "ispaletteitem": true,
     "text": "DS7",
     "imageurl": "/static/img/upload/DS7.jpg",
@@ -72,7 +72,7 @@ db.scenarioitems.save([{
   },
   {
     "projectid": "preferencemap",
-    "scenarioid": "test",
+    "scenarioid": "",
     "ispaletteitem": true,
     "text": "DS4",
     "imageurl": "/static/img/upload/DS4.jpg",
@@ -90,7 +90,7 @@ db.scenarioitems.save([{
   },
  {
     "projectid": "preferencemap",
-    "scenarioid": "test",
+    "scenarioid": "",
     "ispaletteitem": true,
     "text": "DS5",
     "imageurl": "/static/img/upload/DS5.jpg",
@@ -108,7 +108,7 @@ db.scenarioitems.save([{
   },
   {
     "projectid": "preferencemap",
-    "scenarioid": "test",
+    "scenarioid": "",
     "ispaletteitem": true,
     "text": "DS2",
     "imageurl": "/static/img/upload/DS2.jpg",
@@ -126,7 +126,7 @@ db.scenarioitems.save([{
   },
  {
     "projectid": "preferencemap",
-    "scenarioid": "test",
+    "scenarioid": "",
     "ispaletteitem": true,
     "text": "DS8",
     "imageurl": "/static/img/upload/DS8.jpg",
