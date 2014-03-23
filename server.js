@@ -30,6 +30,8 @@ app.get(basepath + '/', routes.index);
 
 app.get(basepath + '/uberadmin', routes.uberadmin);
 
+app.get(basepath + '/:projectid', routes.scenario);
+
 app.get(basepath + '/:projectid/:scenarioid', routes.scenario);
 
 app.get(basepath + '/:projectid/admin', routes.admin);

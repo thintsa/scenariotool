@@ -5,7 +5,7 @@ exports.index = function(req, res){
 
 // scenario page
 exports.scenario = function(req, res){
-	res.render('scenario', { projectid: req.params.projectid });
+	res.render('scenario', { projectid: req.params.projectid, scenarioid: req.params.scenarioid });
 };
 
 // admin page

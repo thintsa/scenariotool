@@ -1,8 +1,7 @@
 $(document).ready(function(){
-	var canvas = $('#scenariocanvas');
 	var api_base = 'http://localhost/api/';
 
-	var scenarioid = $('#scenariocanvas').attr('title');
+	var canvas = $('#scenariocanvas');
 
 	var scenario = Object();
 	var scenarioitems = Array();
@@ -11,7 +10,7 @@ $(document).ready(function(){
 	// check if scenario exists already
 	/*$.get(api_base + 'projects/' + scenarioid + '/scenarios/test?_=' + date.getTime(), function(data) {
 		if (data.length > 0) {*/
-			$.get(api_base + 'projects/' + scenarioid + '/scenarios/test/items?_=' + date.getTime(), function(data) {
+			$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items?_=' + date.getTime(), function(data) {
 				scenarioitems = data;
 				// render items
 				$.each(scenarioitems, function(index, item) {
@@ -149,7 +148,7 @@ $(document).ready(function(){
 					updateitem(scenarioid, $(this).parent().attr('id'), {text : value});
 					return(value);
 				}, {
-				placeholder: '<span class="placeholder">Kirjoita kuvateksti...</span>'
+				placeholder: '<span class="placeholder">Text</span>'
 			});
 		});
 	}
@@ -197,7 +196,7 @@ $(document).ready(function(){
 	function updateitem(scenarioid, id, item) {
 		$.extend(item, {password: $.cookie('scenariopw')});
 		$.ajax({
-			url: api_base + 'scenarios/' + scenarioid + '/items/' + id,
+			url: api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items/' + id,
 			type: 'PUT',
 			data: item,
 			success: function(result) { console.log(result); }
@@ -207,7 +206,7 @@ $(document).ready(function(){
 	function deleteitem(scenarioid, id) {
 		var data = {password: $.cookie('scenariopw')};
 		$.ajax({
-			url: api_base + 'scenarios/' + scenarioid + '/items/' + id,
+			url: api_base + 'scenarios/' + projectid + '/scenarios/' + scenarioid + '/items/' + id,
 			type: 'DELETE',
 			data: data,
 			success: function(result) { console.log(result); }
@@ -224,5 +223,5 @@ $(document).ready(function(){
 			if (item.posz > maxz) maxz = item.posz;
 		});
 		return maxz;
-	};
+	}
 });
