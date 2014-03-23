@@ -143,7 +143,8 @@ $(document).ready(function(){
 					var maxz = getmaxz(scenarioitems) + 1;
 					scenarioitems.maxz = maxz;
 					$(this).css('z-index', maxz);
-				}
+				},
+				opacity: 0.7
 			});
 		});
 	}
@@ -244,7 +245,7 @@ $(document).ready(function(){
 		});
 	}
 
-	function getmaxz(items) {
+	function getmaxz(items) { //todo: DEPRECATED: stack option is now available in jQueryUI, see http://jqueryui.com/draggable/#visual-feedback
 		var maxz = 0;
 		$.each(items, function(index, item) {
 			if (items.maxz !== undefined) {
