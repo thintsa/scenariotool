@@ -17,7 +17,13 @@ $(document).ready(function(){
 
 		// get palette items too
 		$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/paletteitems?_=' + date.getTime(), function(data) {
+			shuffle(data);
+			var startx = 230, starty = 230, increment = 2;
+			var i = 0;
 			$.each(data, function(index, item) {
+				item.posx = startx + i * increment;
+				item.posy = starty + i * increment;
+				i++;
 				if ($.inArray(item._id, itemids) === -1) {
 					scenarioitems.push(item);
 				}
@@ -255,5 +261,25 @@ $(document).ready(function(){
 			if (item.posz > maxz) maxz = item.posz;
 		});
 		return maxz;
+	}
+
+	function shuffle(array) {
+		var currentIndex = array.length
+			, temporaryValue
+			, randomIndex;
+
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		}
+
+		return array;
 	}
 });
