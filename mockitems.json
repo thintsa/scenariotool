@@ -11,10 +11,10 @@ db.scenarioitems.save([{
     "posz": 0,
     "posy": 220,
     "posx": 220,
-    "imageheight": 21,
-    "imagewidth": 60,
-    "height": 42,
-    "width": 60
+    "imageheight": 14,
+    "imagewidth": 40,
+    "height": 35,
+    "width": 40
   },
 {
     "projectid": "preferencemap",
@@ -27,12 +27,12 @@ db.scenarioitems.save([{
     "modified": "2014-03-22T21:48:33.188Z",
     "rot": 0,
     "posz": 0,
-    "posy": 222,
+    "posy": 220,
     "posx": 222,
-    "imageheight": 54,
-    "imagewidth": 60,
-    "height": 75,
-    "width": 60
+    "imageheight": 37,
+    "imagewidth": 40,
+    "height": 58,
+    "width": 40
   },
   {
     "projectid": "preferencemap",
@@ -45,12 +45,12 @@ db.scenarioitems.save([{
     "modified": "2014-03-22T21:48:33.188Z",
     "rot": 0,
     "posz": 0,
-    "posy": 224,
+    "posy": 220,
     "posx": 224,
-    "imageheight": 60,
-    "imagewidth": 60,
-    "height": 81,
-    "width": 60
+    "imageheight": 40,
+    "imagewidth": 40,
+    "height": 61,
+    "width": 40
   },
  {
     "projectid": "preferencemap",
@@ -63,12 +63,12 @@ db.scenarioitems.save([{
     "modified": "2014-03-22T21:48:33.188Z",
     "rot": 0,
     "posz": 0,
-    "posy": 226,
+    "posy": 220,
     "posx": 226,
-    "imageheight": 54,
-    "imagewidth": 60,
-    "height": 75,
-    "width": 60
+    "imageheight": 37,
+    "imagewidth": 40,
+    "height": 58,
+    "width": 40
   },
   {
     "projectid": "preferencemap",
@@ -81,12 +81,12 @@ db.scenarioitems.save([{
     "modified": "2014-03-22T21:48:33.188Z",
     "rot": 0,
     "posz": 0,
-    "posy": 228,
+    "posy": 220,
     "posx": 228,
-    "imageheight": 54,
-    "imagewidth": 60,
-    "height": 75,
-    "width": 60
+    "imageheight": 37,
+    "imagewidth": 40,
+    "height": 58,
+    "width": 40
   },
  {
     "projectid": "preferencemap",
@@ -99,12 +99,12 @@ db.scenarioitems.save([{
     "modified": "2014-03-22T21:48:33.188Z",
     "rot": 0,
     "posz": 0,
-    "posy": 230,
+    "posy": 220,
     "posx": 230,
-    "imageheight": 40,
-    "imagewidth": 60,
-    "height": 61,
-    "width": 60
+    "imageheight": 27,
+    "imagewidth": 40,
+    "height": 48,
+    "width": 40
   },
   {
     "projectid": "preferencemap",
@@ -117,12 +117,12 @@ db.scenarioitems.save([{
     "modified": "2014-03-22T21:48:33.188Z",
     "rot": 0,
     "posz": 0,
-    "posy": 232,
+    "posy": 220,
     "posx": 232,
-    "imageheight": 60,
-    "imagewidth": 60,
-    "height": 81,
-    "width": 60
+    "imageheight": 40,
+    "imagewidth": 40,
+    "height": 61,
+    "width": 40
   },
  {
     "projectid": "preferencemap",
@@ -135,10 +135,10 @@ db.scenarioitems.save([{
     "modified": "2014-03-22T21:48:33.188Z",
     "rot": 0,
     "posz": 0,
-    "posy": 234,
+    "posy": 220,
     "posx": 234,
-    "imageheight": 54,
-    "imagewidth": 60,
-    "height": 75,
-    "width": 60
+    "imageheight": 37,
+    "imagewidth": 40,
+    "height": 58,
+    "width": 40
   }])

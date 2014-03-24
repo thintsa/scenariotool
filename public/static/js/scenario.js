@@ -22,7 +22,6 @@ $(document).ready(function(){
 			var i = 0;
 			$.each(data, function(index, item) {
 				item.posx = startx + i * increment;
-				item.posy = starty + i * increment;
 				i++;
 				if ($.inArray(item._id, itemids) === -1) {
 					scenarioitems.push(item);
@@ -37,6 +36,52 @@ $(document).ready(function(){
 	});
 
 	enable_editing();
+	setphase(1);
+
+	function setphase(phase) {
+		switch (phase) {
+			case 1:
+				// change background to x axis
+				$("#scenariocanvas").css("background", 'url("/static/img/upload/prefmapbgx.png"');
+				// change draggables to x only
+				$(".ui-draggable").draggable("option", "axis", "x");
+				// create next button
+				var phasebutton = $('<button/>',
+				{
+					id: 'phasebutton',
+					text: 'Next',
+				        click: function () {
+							setphase(2);
+						}
+				});
+				phasebutton.css({
+					position: "absolute",
+					bottom: "0px",
+					right: "0px",
+					"z-index": 200000
+				});
+				canvas.append(phasebutton);
+				break;
+			case 2:
+				// change backgound to y axis
+				$("#scenariocanvas").css("background", 'url("/static/img/upload/prefmapbgy.png"');
+				// change draggables to y only
+				$(".ui-draggable").draggable("option", "axis", "y");
+				// move draggables to zero
+				// change next to finish
+				$("#phasebutton").text('Finish');
+				$("#phasebutton").off('click').on('click', function() {setphase(3);});
+				break;
+			case 3:
+				// change background to both axis
+				$("#scenariocanvas").css("background", 'url("/static/img/upload/prefmapbg.png"');
+				// disable draggables
+				$(".ui-draggable").draggable("destroy");
+				// disable button
+				$("#phasebutton").attr("disabled", true);
+				break;
+		}
+	}
 
 	function enable_editing() {
 		$('#scenariotoolbar').show();
@@ -144,6 +189,7 @@ $(document).ready(function(){
 	function makedraggable(items) {
 		items.each(function () {
 			$(this).draggable({
+				axis: 'x', //xxx: remove after demo!
 				containment: 'parent',
 				start: function(event, ui ) {
 					var maxz = getmaxz(scenarioitems) + 1;
