@@ -18,7 +18,7 @@ $(document).ready(function(){
 		// get palette items too
 		$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/paletteitems?_=' + date.getTime(), function(data) {
 			shuffle(data);
-			var startx = 230, starty = 230, increment = 2;
+			var startx = 370, starty = 370, increment = 2;
 			var i = 0;
 			$.each(data, function(index, item) {
 				item.posx = startx + i * increment;
