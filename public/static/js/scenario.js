@@ -22,6 +22,7 @@ $(document).ready(function(){
 			var i = 0;
 			$.each(data, function(index, item) {
 				item.posx = startx + i * increment;
+				item.posy = starty;
 				i++;
 				if ($.inArray(item._id, itemids) === -1) {
 					scenarioitems.push(item);
