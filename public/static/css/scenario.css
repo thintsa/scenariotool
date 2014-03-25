@@ -15,6 +15,12 @@ a {
   color: white;
   position: relative;
   border: solid 1px black;
+  left: 250px;
+}
+
+#scenariotask {
+  float: left;
+  width: 200px;  
 }
 
 #scenariotoolbar {
