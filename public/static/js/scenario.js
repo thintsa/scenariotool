@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var api_base = 'http://localhost/api/';
+	var api_base = 'http://thtimo4/api/';
 
 	var canvas = $('#scenariocanvas');
 
@@ -66,7 +66,7 @@ $(document).ready(function(){
 				break;
 			case 2:
 				// change backgound to y axis
-				$("#scenariocanvas").css("background", 'url("http://localhost/static/img/upload/prefmapbgy.png")');
+				$("#scenariocanvas").css("background", 'url("/static/img/upload/prefmapbgy.png")');
 				$("#scenariotask").text('Tehtävä 2: Sijoita annetut kahdeksan digitaalista palvelua nyt pystysuuntaan niin, että palvelu, jota mielestäsi on helpoin käyttää sijoitat ylimmäiseksi ja vaikeakäyttöisimmän palvelun alimmaiseksi. Tee päätös oman kokemuksesi mukaan. Sijoita kaikki digitaaliset palvelut oman kokemuksesi mukaiseen järjestykseen. Huomaa, että voit muokata valintojasi niin kauan kunnes olet valmis. Paina lopuksi linkkiä "Finish".');
 				// change draggables to y only
 				$(".ui-draggable").draggable("option", "axis", "y");
@@ -77,7 +77,7 @@ $(document).ready(function(){
 				break;
 			case 3:
 				// change background to both axis
-				$("#scenariocanvas").css("background", 'url("http://localhost/static/img/upload/prefmapbg.png")');
+				$("#scenariocanvas").css("background", 'url("/static/img/upload/prefmapbg.png")');
 				$("#scenariotask").text("");
 				// disable draggables
 				$(".ui-draggable").draggable("destroy");
