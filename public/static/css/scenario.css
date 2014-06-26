@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  margin: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background: white;
 }
@@ -9,13 +9,12 @@ a {
 }
 
 #scenariocanvas {
-	width: 712px;
-	height: 712px;
+	width: 710px;
+	height: 710px;
   background: url('/static/img/upload/prefmapbgn.png');
   color: white;
   position: relative;
   border: solid 1px black;
-  left: 250px;
 }
 
 #scenariotask {
