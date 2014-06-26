@@ -197,6 +197,10 @@ $(document).ready(function(){
 					scenarioitems.maxz = maxz;
 					$(this).css('z-index', maxz);
 				},
+				drag: function(event, ui ) {
+					$(this).children('.crosshairy').css('left', ui.position.left + 30);
+					$(this).children('.crosshairx').css('top', ui.position.top + 30);
+				},
 				opacity: 0.7
 			});
 		});
@@ -263,6 +267,11 @@ $(document).ready(function(){
 
 			var textnode = newitem.children('.text:first');
 			textnode.text(item.text);
+
+			var crosshairy = $('<div class="crosshairy hair"></div>').hide();
+			newitem.append(crosshairy);
+			var crosshairx = $('<div class="crosshairx hair"></div>').hide();
+			newitem.append(crosshairx);
 		}
 		newitem.css({
 			left: item.posx,
