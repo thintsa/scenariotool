@@ -18,7 +18,7 @@ $(document).ready(function(){
 		// get palette items too
 		$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/paletteitems?_=' + date.getTime(), function(data) {
 			shuffle(data);
-			var startx = 370, starty = 370, increment = 2;
+			var startx = 326, starty = 326, increment = 2;
 			var i = 0;
 			$.each(data, function(index, item) {
 				item.posx = startx + i * increment;
@@ -44,7 +44,6 @@ $(document).ready(function(){
 			case 1:
 				// change background to x axis
 				$("#scenariocanvas").css("background", 'url("/static/img/upload/prefmapbgx.png")');
-				$("#scenariotask").text('Tehtävä 1: Sijoita annetut kahdeksan digitaalista palvelua vaakasuuntaan niin, että mielestäsi kaikkein kiinnostavimman palvelun laitat oikealle ja vähiten kiinnostavan vasemmalle. Tee päätös oman kokemuksesi mukaan. Sijoita kaikki digitaaliset palvelut oman kokemuksesi mukaiseen järjestykseen. Huomaa, että voit muokata valintojasi niin kauan kunnes olet valmis. Paina lopuksi linkkiä "Next".');
 				// change draggables to x only
 				$(".ui-draggable").draggable("option", "axis", "x");
 				// create next button
@@ -67,7 +66,6 @@ $(document).ready(function(){
 			case 2:
 				// change backgound to y axis
 				$("#scenariocanvas").css("background", 'url("http://localhost/static/img/upload/prefmapbgy.png")');
-				$("#scenariotask").text('Tehtävä 2: Sijoita annetut kahdeksan digitaalista palvelua nyt pystysuuntaan niin, että palvelu, jota mielestäsi on helpoin käyttää sijoitat ylimmäiseksi ja vaikeakäyttöisimmän palvelun alimmaiseksi. Tee päätös oman kokemuksesi mukaan. Sijoita kaikki digitaaliset palvelut oman kokemuksesi mukaiseen järjestykseen. Huomaa, että voit muokata valintojasi niin kauan kunnes olet valmis. Paina lopuksi linkkiä "Finish".');
 				// change draggables to y only
 				$(".ui-draggable").draggable("option", "axis", "y");
 				// move draggables to zero
@@ -78,7 +76,6 @@ $(document).ready(function(){
 			case 3:
 				// change background to both axis
 				$("#scenariocanvas").css("background", 'url("http://localhost/static/img/upload/prefmapbg.png")');
-				$("#scenariotask").text("");
 				// disable draggables
 				$(".ui-draggable").draggable("destroy");
 				// disable button

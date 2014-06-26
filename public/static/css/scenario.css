@@ -9,8 +9,8 @@ a {
 }
 
 #scenariocanvas {
-	width: 800px;
-	height: 800px;
+	width: 712px;
+	height: 712px;
   background: url('/static/img/upload/prefmapbgn.png');
   color: white;
   position: relative;
@@ -60,9 +60,10 @@ a {
 
 .scenarioitem .text {
 	width: auto;
-	height: 1.2em;
+	height: 16px;
+	font-size: 0.8em;
 	color: black;
-	padding-top: 4px;
+	padding-top: 2px;
 	text-align: center;
 }
 
