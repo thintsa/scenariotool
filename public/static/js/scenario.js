@@ -141,7 +141,16 @@ $(document).ready(function(){
 				if (item.frompaletteitem !== undefined) {
 					$.post(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items', item, function(saveresponse) {
 						item._id = saveresponse._id;
-						createitem(item);
+						newitem = createitem(item);
+						newitem.addClass("moved");
+						if (phase == 1) {
+							newitem.children('.crosshairx').hide();
+							newitem.children('.crosshairy').show();
+						}
+						if (phase == 2) {
+							newitem.children('.crosshairx').show();
+							newitem.children('.crosshairy').hide();
+						}
 						ui.draggable.remove();
 					});
 				} else {
@@ -329,6 +338,7 @@ $(document).ready(function(){
 			makedraggable(newitem);
 		}
 		canvas.append(newitem);
+		return newitem;
 	}
 
 	function updateitem(scenarioid, id, item) {
