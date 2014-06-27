@@ -6,6 +6,9 @@ $(document).ready(function(){
 	var scenario = Object();
 	var scenarioitems = Array();
 
+	var phase = 1;
+	var done = false;
+
 	var date = new Date(); // using date to ensure avoiding cache problems
 
 	$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items?_=' + date.getTime(), function(data) {
@@ -39,21 +42,29 @@ $(document).ready(function(){
 	enable_editing();
 	setphase(1);
 
-	function setphase(phase) {
+	function setphase(newphase) {
+		phase = newphase;
 		switch (phase) {
 			case 1:
 				// change background to x axis
 				$("#scenariocanvas").css("background", 'url("/static/img/upload/prefmapbgx.png")');
 				// change draggables to x only
 				$(".ui-draggable").draggable("option", "axis", "x");
+				// hide crosshairs
+				$(".hair").hide();
 				// create next button
 				var phasebutton = $('<button/>',
 				{
 					id: 'phasebutton',
 					text: 'Next',
-				        click: function () {
+				    click: function () {
+						//check if all moved, if not flash those which are not
+						if (done) {
 							setphase(2);
+						} else {
+							$(".scenarioitem").not(".moved").effect('highlight', {}, 2000);
 						}
+					}
 				});
 				phasebutton.css({
 					position: "absolute",
@@ -61,19 +72,35 @@ $(document).ready(function(){
 					right: "0px",
 					"z-index": 200000
 				});
+				phasebutton.addClass('ui-state-disabled');
 				canvas.append(phasebutton);
 				break;
 			case 2:
+				done = false;
 				// change backgound to y axis
 				$("#scenariocanvas").css("background", 'url("http://localhost/static/img/upload/prefmapbgy.png")');
 				// change draggables to y only
 				$(".ui-draggable").draggable("option", "axis", "y");
+				// hide crosshairs
+				$(".hair").hide();
 				// move draggables to zero
+				$(".ui-draggable").removeClass("moved");
 				// change next to finish
-				$("#phasebutton").text('Finish');
-				$("#phasebutton").off('click').on('click', function() {setphase(3);});
+				phasebutton = $("#phasebutton");
+				phasebutton.text('Finish');
+				phasebutton.addClass('ui-state-disabled');
+				phasebutton.off('click').on('click', function() {
+					//check if all moved, if not flash those which are not
+					if (done) {
+						setphase(3);
+					} else {
+						$(".scenarioitem").not(".moved").effect('highlight', {}, 2000);
+					}
+				});
 				break;
 			case 3:
+				// hide crosshairs
+				$(".hair").hide();
 				// change background to both axis
 				$("#scenariocanvas").css("background", 'url("http://localhost/static/img/upload/prefmapbg.png")');
 				// disable draggables
@@ -198,10 +225,25 @@ $(document).ready(function(){
 					$(this).css('z-index', maxz);
 				},
 				drag: function(event, ui ) {
-					$(this).children('.crosshairy').css('left', ui.position.left + 30);
-					$(this).children('.crosshairx').css('top', ui.position.top + 30);
+					$(this).addClass("moved");
+					if (phase == 1) {
+						$(this).children('.crosshairx').hide().css('top', ui.position.top + 34);
+						$(this).children('.crosshairy').show().css('left', ui.position.left + 34);
+					}
+					if (phase == 2) {
+						$(this).children('.crosshairx').show().css('top', ui.position.top + 34);
+						$(this).children('.crosshairy').hide().css('left', ui.position.left + 34);
+					}
+				},
+				stop: function(event, ui ) {
+					// check if all moved and enable button
+					if(allmoved()) {
+						$("#phasebutton").removeClass('ui-state-disabled');
+						done = true;
+					}
 				},
 				opacity: 0.7
+				/*stack: ".scenariocanvas div.scenarioitem"*/
 			});
 		});
 	}
@@ -269,8 +311,10 @@ $(document).ready(function(){
 			textnode.text(item.text);
 
 			var crosshairy = $('<div class="crosshairy hair"></div>').hide();
+			crosshairy.css({left: item.posx + 34});
 			newitem.append(crosshairy);
 			var crosshairx = $('<div class="crosshairx hair"></div>').hide();
+			crosshairx.css({top: item.posy + 34});
 			newitem.append(crosshairx);
 		}
 		newitem.css({
@@ -337,5 +381,18 @@ $(document).ready(function(){
 		}
 
 		return array;
+	}
+
+	function allmoved() {
+		var allmoved = true;
+
+		$(".scenarioitem").each(function (index) {
+			if ($(this).hasClass("moved") == false) {
+				allmoved = false;
+				return false;
+			};
+		});
+
+		return allmoved;
 	}
 });
