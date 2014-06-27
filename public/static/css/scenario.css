@@ -12,9 +12,36 @@ a {
 	width: 710px;
 	height: 710px;
   background: url('/static/img/upload/prefmapbgn.png');
-  color: white;
   position: absolute;
   border: solid 1px black;
+}
+
+#labelleft {
+	position: absolute;
+	left:10px;
+	top:370px;
+	max-width:200px;
+}
+
+#labelright {
+	position: absolute;
+	top:370px;
+	right:10px;
+	max-width:200px;
+}
+
+#labeltop {
+	position: absolute;
+	left:370px;
+	top:10px;
+	max-width:200px;
+}
+
+#labelbottom {
+	position: absolute;
+	left:370px;
+	bottom:10px;
+	max-width:200px;
 }
 
 #scenariotask {

@@ -9,6 +9,30 @@ $(document).ready(function(){
 	var phase = 1;
 	var done = false;
 
+	var attributes = [
+		{left: 'Pidän', right: 'En pidä '},
+		{left: 'Luotettava', right: 'Epäluotettava'},
+		{left: 'Hyödyllinen', right: 'Hyödytön'},
+		{left: 'Etuuden lunastaminen on vaivatonta ostamisen yhteydessä', right: 'Etuuden lunastaminen on vaivalloista ostamisen yhteydessä'},
+		{left: 'Käytettävissä olevista eduista on helppo saada tietoa', right: 'Käytettävissä olevista eduista on hankalaa saada tietoa'},
+		{left: 'Kätevä', right: 'Hankala'},
+		{left: 'Edullinen', right: 'Kallis'},
+		{left: 'Motivoi säännölliseen käyttöön', right: 'Ei motivoi säännölliseen käyttöön'},
+		{left: 'Houkutteleva', right: 'Ei houkutteleva'},
+		{left: 'Miellyttävä', right: 'Epämiellyttävä'},
+		{left: 'Etu tulee helposti hyödynnettyä', right: 'Etua ei tule hyödynnettyä'},
+		{left: 'Nopea', right: 'Hidas'},
+		{left: 'Nykyaikainen', right: 'Vanhanaikainen'},
+		{left: 'Kiinnostava', right: 'Tylsä'},
+		{left: 'Rento', right: 'Ahdistava'},
+		{left: 'Sopii minulle', right: 'Ei sovi minulle'}];
+
+	var res = scenarioid.split('-');
+	var scenariomaker = res[0];
+	var scenarionumber = res[1];
+	Math.seed = Math.abs(hash(scenariomaker));
+	shuffleattrs(attributes);
+
 	var date = new Date(); // using date to ensure avoiding cache problems
 
 	$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items?_=' + date.getTime(), function(data) {
@@ -52,6 +76,11 @@ $(document).ready(function(){
 				$(".ui-draggable").draggable("option", "axis", "x");
 				// hide crosshairs
 				$(".hair").hide();
+				// set labels
+				$("#labelleft").text(attributes[scenarionumber - 1].left);
+				$("#labelright").text(attributes[scenarionumber - 1].right);
+				$("#labeltop").text('');
+				$("#labelbottom").text('');
 				// create next button
 				var phasebutton = $('<button/>',
 				{
@@ -83,30 +112,26 @@ $(document).ready(function(){
 				$(".ui-draggable").draggable("option", "axis", "y");
 				// hide crosshairs
 				$(".hair").hide();
+				// set labels
+				$("#labelleft").text('');
+				$("#labelright").text('');
+				$("#labeltop").text(attributes[scenarionumber].left);
+				$("#labelbottom").text(attributes[scenarionumber].right);
 				// move draggables to zero
 				$(".ui-draggable").removeClass("moved");
 				// change next to finish
 				phasebutton = $("#phasebutton");
-				phasebutton.text('Finish');
 				phasebutton.addClass('ui-state-disabled');
-				phasebutton.off('click').on('click', function() {
-					//check if all moved, if not flash those which are not
-					if (done) {
-						setphase(3);
-					} else {
-						$(".scenarioitem").not(".moved").effect('highlight', {}, 2000);
-					}
-				});
-				break;
-			case 3:
-				// hide crosshairs
-				$(".hair").hide();
-				// change background to both axis
-				$("#scenariocanvas").css("background", 'url("http://localhost/static/img/upload/prefmapbg.png")');
-				// disable draggables
-				$(".ui-draggable").draggable("destroy");
-				// disable button
-				$("#phasebutton").attr("disabled", true);
+				if (scenarionumber < 15) {
+					phasebutton.off('click').on('click', function() {
+						newscenarionumber = parseInt(scenarionumber) + 2;
+						window.location.replace('http://localhost/scenario/pace/' + scenariomaker + '-' + newscenarionumber);
+					});
+				} else {
+					phasebutton.text('Finish');
+					phasebutton.off('click').on('click', function() {
+					});
+				}
 				break;
 		}
 	}
@@ -139,6 +164,7 @@ $(document).ready(function(){
 
 				console.log('dropped: y:' + ui.position.top + ' x:' + ui.position.left );
 				if (item.frompaletteitem !== undefined) {
+					item.axis = attributes[scenarionumber - 2 + phase].left;
 					$.post(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items', item, function(saveresponse) {
 						item._id = saveresponse._id;
 						newitem = createitem(item);
@@ -393,6 +419,36 @@ $(document).ready(function(){
 		return array;
 	}
 
+	function seededrandom(max, min) {
+		max = max || 1;
+		min = min || 0;
+
+		Math.seed = (Math.seed * 9301 + 49297) % 233280;
+		var rnd = Math.seed / 233280;
+
+		return min + rnd * (max - min);
+	}
+
+	function shuffleattrs(array) {
+		var currentIndex = array.length
+			, temporaryValue
+			, randomIndex;
+
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+			// Pick a remaining element...
+			randomIndex = Math.floor(seededrandom() * (array.length-2)+1);
+			currentIndex -= 1;
+
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		}
+
+		return array;
+	}
+
 	function allmoved() {
 		var allmoved = true;
 
@@ -405,4 +461,16 @@ $(document).ready(function(){
 
 		return allmoved;
 	}
+
+	function hash(str) {
+	  var hash = 0, i, chr, len;
+	  if (str.length == 0) return hash;
+	  for (i = 0, len = str.length; i < len; i++) {
+		chr   = str.charCodeAt(i);
+		hash  = ((hash << 5) - hash) + chr;
+		hash |= 0; // Convert to 32bit integer
+	  }
+	  return hash;
+	};
+
 });
