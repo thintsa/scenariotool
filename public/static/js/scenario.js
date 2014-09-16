@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var api_base = 'http://localhost/api/';
+	var api_base = 'http://owela.fi/api/';
 
 	var canvas = $('#scenariocanvas');
 
@@ -85,7 +85,7 @@ $(document).ready(function(){
 				var phasebutton = $('<button/>',
 				{
 					id: 'phasebutton',
-					text: 'Next',
+					text: 'Seuraava',
 				    click: function () {
 						//check if all moved, if not flash those which are not
 						if (done) {
@@ -107,7 +107,7 @@ $(document).ready(function(){
 			case 2:
 				done = false;
 				// change backgound to y axis
-				$("#scenariocanvas").css("background", 'url("http://localhost/static/img/upload/prefmapbgy.png")');
+				$("#scenariocanvas").css("background", 'url("http://owela.fi/static/img/upload/prefmapbgy.png")');
 				// change draggables to y only
 				$(".ui-draggable").draggable("option", "axis", "y");
 				// hide crosshairs
@@ -124,12 +124,23 @@ $(document).ready(function(){
 				phasebutton.addClass('ui-state-disabled');
 				if (scenarionumber < 15) {
 					phasebutton.off('click').on('click', function() {
-						newscenarionumber = parseInt(scenarionumber) + 2;
-						window.location.replace('http://localhost/scenario/pace/' + scenariomaker + '-' + newscenarionumber);
+						//check if all moved, if not flash those which are not
+						if (done) {
+							newscenarionumber = parseInt(scenarionumber) + 2;
+							window.location.replace('http://owela.fi/scenario/pace/' + scenariomaker + '-' + newscenarionumber);
+						} else {
+							$(".scenarioitem").not(".moved").effect('highlight', {}, 2000);
+						}
 					});
 				} else {
-					phasebutton.text('Finish');
+					phasebutton.text('Valmis');
 					phasebutton.off('click').on('click', function() {
+						//check if all moved, if not flash those which are not
+						if (done) {
+							window.parent.location.replace('http://owela.fi/pace/kiitos/');
+						} else {
+							$(".scenarioitem").not(".moved").effect('highlight', {}, 2000);
+						}
 					});
 				}
 				break;
