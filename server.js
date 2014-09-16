@@ -32,9 +32,9 @@ app.get(basepath + '/uberadmin', routes.uberadmin);
 
 app.get(basepath + '/:projectid', routes.scenario);
 
-app.get(basepath + '/:projectid/:scenarioid', routes.scenario);
-
 app.get(basepath + '/:projectid/admin', routes.admin);
+
+app.get(basepath + '/:projectid/:scenarioid', routes.scenario);
 
 app.post(basepath + '/imgupload', routes.imgupload);
 
