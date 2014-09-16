@@ -1,0 +1,102 @@
+#root {
+	background-color: #d2dfe6;/*#474;*/
+}
+#footer {
+	background-color: #d2dfe6;/*#474;*/
+	padding: 7px 15px 7px 0;
+}
+#footer p {
+	float: right;
+	padding: 0;
+	margin: 0;
+	color: #555;/*#fff;*/
+}
+.text-header-color {
+	color: #555;/*#fff;*/
+}
+.text-error-color {
+	color: #c33;
+}
+.ui-accordion .ui-accordion-content {
+	border-top: 0 none;
+	overflow: auto;
+	padding: 1em 2.2em;
+	margin: 0;
+}
+.add-phase-button {
+	font-size: 18px;
+	margin-left: 12px;
+}
+.add-paletteitem-button {
+	margin-top: 12px;
+}
+.remove-phase-button {
+	float: right;
+}
+.clone-phase-button {
+	margin-left: 12px;
+}
+.remove-paletteitem-button {
+	float: right;
+}
+.paletteitem-r-image {
+	height: 42px;
+	margin: 0 0 2px 0;
+}
+.paletteitem-r-text {
+	font-size: 16px;
+	display: inline;
+	padding-left: 8px;
+}
+ul li { 
+	list-style: none 
+}
+.paletteitem-ul-root {
+	margin-top: 2px;
+}
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  float: left;
+  margin-right: 5px;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  transform: translate(-300px, 0) scale(4);
+  font-size: 23px;
+  direction: ltr;
+  cursor: pointer;
+}
+.projectid-text-input {
+	width: 42px;
+}
+.project-text-input-span {
+	color: #555;/*#fff;*/
+	margin: 0 9px 0 3px;
+}
+.paletteitem-text-input {
+	width: 270px;
+}
+.navi-input {
+	width: 140px;
+}
+.navi-label {
+	margin-left: 16px;
+}
+.navigation-button-title {
+	margin-bottom: 10px;
+}
+.palette-wrapper-header {
+	margin: 20px 0 12px 0;
+}
+.palette-position-label {
+	margin-left: 32px;
+}
+.palette-position-input {
+	width: 140px;
+}
