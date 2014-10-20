@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var api_base = 'http://owela.fi/api/';
+	var api_base = 'http://localhost/api/';
 
 	var canvas = $('#scenariocanvas');
 
@@ -9,29 +9,9 @@ $(document).ready(function(){
 	var phase = 1;
 	var done = false;
 
-	var attributes = [
-		{left: 'Pidän', right: 'En pidä '},
-		{left: 'Luotettava', right: 'Epäluotettava'},
-		{left: 'Hyödyllinen', right: 'Hyödytön'},
-		{left: 'Etuuden lunastaminen on vaivatonta ostamisen yhteydessä', right: 'Etuuden lunastaminen on vaivalloista ostamisen yhteydessä'},
-		{left: 'Käytettävissä olevista eduista on helppo saada tietoa', right: 'Käytettävissä olevista eduista on hankalaa saada tietoa'},
-		{left: 'Kätevä', right: 'Hankala'},
-		{left: 'Edullinen', right: 'Kallis'},
-		{left: 'Motivoi säännölliseen käyttöön', right: 'Ei motivoi säännölliseen käyttöön'},
-		{left: 'Houkutteleva', right: 'Ei houkutteleva'},
-		{left: 'Miellyttävä', right: 'Epämiellyttävä'},
-		{left: 'Etu tulee helposti hyödynnettyä', right: 'Etua ei tule hyödynnettyä'},
-		{left: 'Nopea', right: 'Hidas'},
-		{left: 'Nykyaikainen', right: 'Vanhanaikainen'},
-		{left: 'Kiinnostava', right: 'Tylsä'},
-		{left: 'Rento', right: 'Ahdistava'},
-		{left: 'Sopii minulle', right: 'Ei sovi minulle'}];
-
-	var res = scenarioid.split('-');
-	var scenariomaker = res[0];
-	var scenarionumber = res[1];
+	var res = scenarioid;
+	var scenariomaker = scenarioid;
 	Math.seed = Math.abs(hash(scenariomaker));
-	shuffleattrs(attributes);
 
 	var date = new Date(); // using date to ensure avoiding cache problems
 
@@ -45,10 +25,10 @@ $(document).ready(function(){
 		// get palette items too
 		$.get(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/paletteitems?_=' + date.getTime(), function(data) {
 			shuffle(data);
-			var startx = 326, starty = 326, increment = 2;
+			var startx = 650, starty = 5, increment = 92;
 			var i = 0;
 			$.each(data, function(index, item) {
-				item.posx = startx + i * increment;
+				item.posx = startx - increment - i * increment;
 				item.posy = starty;
 				i++;
 				if ($.inArray(item._id, itemids) === -1) {
@@ -71,78 +51,9 @@ $(document).ready(function(){
 		switch (phase) {
 			case 1:
 				// change background to x axis
-				$("#scenariocanvas").css("background", 'url("/static/img/upload/prefmapbgx.png")');
-				// change draggables to x only
-				$(".ui-draggable").draggable("option", "axis", "x");
+				$("#scenariocanvas").css("background", 'url("/static/img/upload/vpbg.png")');
 				// hide crosshairs
 				$(".hair").hide();
-				// set labels
-				$("#labelleft").text(attributes[scenarionumber - 1].left);
-				$("#labelright").text(attributes[scenarionumber - 1].right);
-				$("#labeltop").text('');
-				$("#labelbottom").text('');
-				// create next button
-				var phasebutton = $('<button/>',
-				{
-					id: 'phasebutton',
-					text: 'Seuraava',
-				    click: function () {
-						//check if all moved, if not flash those which are not
-						if (done) {
-							setphase(2);
-						} else {
-							$(".scenarioitem").not(".moved").effect('highlight', {}, 2000);
-						}
-					}
-				});
-				phasebutton.css({
-					position: "absolute",
-					bottom: "0px",
-					right: "0px",
-					"z-index": 200000
-				});
-				phasebutton.addClass('ui-state-disabled');
-				canvas.append(phasebutton);
-				break;
-			case 2:
-				done = false;
-				// change backgound to y axis
-				$("#scenariocanvas").css("background", 'url("http://owela.fi/static/img/upload/prefmapbgy.png")');
-				// change draggables to y only
-				$(".ui-draggable").draggable("option", "axis", "y");
-				// hide crosshairs
-				$(".hair").hide();
-				// set labels
-				$("#labelleft").text('');
-				$("#labelright").text('');
-				$("#labeltop").text(attributes[scenarionumber].left);
-				$("#labelbottom").text(attributes[scenarionumber].right);
-				// move draggables to zero
-				$(".ui-draggable").removeClass("moved");
-				// change next to finish
-				phasebutton = $("#phasebutton");
-				phasebutton.addClass('ui-state-disabled');
-				if (scenarionumber < 15) {
-					phasebutton.off('click').on('click', function() {
-						//check if all moved, if not flash those which are not
-						if (done) {
-							newscenarionumber = parseInt(scenarionumber) + 2;
-							window.location.replace('http://owela.fi/scenario/pace/' + scenariomaker + '-' + newscenarionumber);
-						} else {
-							$(".scenarioitem").not(".moved").effect('highlight', {}, 2000);
-						}
-					});
-				} else {
-					phasebutton.text('Valmis');
-					phasebutton.off('click').on('click', function() {
-						//check if all moved, if not flash those which are not
-						if (done) {
-							window.parent.location.replace('http://owela.fi/pace/kiitos/');
-						} else {
-							$(".scenarioitem").not(".moved").effect('highlight', {}, 2000);
-						}
-					});
-				}
 				break;
 		}
 	}
@@ -175,19 +86,10 @@ $(document).ready(function(){
 
 				console.log('dropped: y:' + ui.position.top + ' x:' + ui.position.left );
 				if (item.frompaletteitem !== undefined) {
-					item.axis = attributes[scenarionumber - 2 + phase].left;
 					$.post(api_base + 'projects/' + projectid + '/scenarios/' + scenarioid + '/items', item, function(saveresponse) {
 						item._id = saveresponse._id;
 						newitem = createitem(item);
 						newitem.addClass("moved");
-						if (phase == 1) {
-							newitem.children('.crosshairx').hide();
-							newitem.children('.crosshairy').show();
-						}
-						if (phase == 2) {
-							newitem.children('.crosshairx').show();
-							newitem.children('.crosshairy').hide();
-						}
 						ui.draggable.remove();
 					});
 				} else {
@@ -263,7 +165,6 @@ $(document).ready(function(){
 	function makedraggable(items) {
 		items.each(function () {
 			$(this).draggable({
-				axis: 'x', //xxx: remove after demo!
 				containment: 'parent',
 				start: function(event, ui ) {
 					var maxz = getmaxz(scenarioitems) + 1;
@@ -272,24 +173,8 @@ $(document).ready(function(){
 				},
 				drag: function(event, ui ) {
 					$(this).addClass("moved");
-					if (phase == 1) {
-						$(this).children('.crosshairx').hide().css('top', ui.position.top + 34);
-						$(this).children('.crosshairy').show().css('left', ui.position.left + 34);
-					}
-					if (phase == 2) {
-						$(this).children('.crosshairx').show().css('top', ui.position.top + 34);
-						$(this).children('.crosshairy').hide().css('left', ui.position.left + 34);
-					}
 				},
-				stop: function(event, ui ) {
-					// check if all moved and enable button
-					if(allmoved()) {
-						$("#phasebutton").removeClass('ui-state-disabled');
-						done = true;
-					}
-				},
-				opacity: 0.7
-				/*stack: ".scenariocanvas div.scenarioitem"*/
+				opacity: 1
 			});
 		});
 	}
